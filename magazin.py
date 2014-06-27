@@ -14,9 +14,13 @@ class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
 
+#Home
+
 @app.route('/')
 def home():
     return flask.render_template('home.html', product_list=Product.query.all())
+
+#Saving a product
 
 @app.route('/save', methods=['POST'])
 def save():
@@ -26,10 +30,21 @@ def save():
     flask.flash("product saved")
     return flask.redirect('/')
 
-@app.route('/edit/<int:product_id>')
+#Editing a product will require POST and GET
+
+@app.route('/edit/<int:product_id>', methods=['POST', 'GET'])
 def edit(product_id):
     product = Product.query.get(product_id)
-    return 'editing %r' % product
+    if not product:
+        flask.abort(404)
+
+    if flask.request.method == 'POST':
+        product.name=flask.request.form['name']
+        db.session.commit()
+        return flask.redirect('/')
+
+    return flask.render_template('edit.html', product = product)
+
 
 db.create_all()
 app.run(debug=True)

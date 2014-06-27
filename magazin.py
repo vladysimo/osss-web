@@ -41,9 +41,27 @@ def edit(product_id):
     if flask.request.method == 'POST':
         product.name=flask.request.form['name']
         db.session.commit()
+        flask.flash("product edited")
         return flask.redirect('/')
 
     return flask.render_template('edit.html', product = product)
+
+#json
+
+@app.route('/api/list')
+def api_list():
+    product_id_list = []
+    for product in Product.query.all():
+        product_id_list.append(product.id)
+    return flask.jsonify({'id_list' : product_id_list, })
+
+#afisam un produs dupa id
+
+@app.route('/api/product/<int:product_id>')
+def api_product(product_id):
+    product = Product.query.get(product_id)
+    return flask.jsonify({
+        'id' : product.id, 'name' : product.name})
 
 
 db.create_all()

@@ -39,9 +39,13 @@ def edit(product_id):
         flask.abort(404)
 
     if flask.request.method == 'POST':
-        product.name=flask.request.form['name']
+        if 'delete' in flask.request.form:
+            db.session.delete(product)
+        else:
+            product.name=flask.request.form['name']
+            flask.flash("product edited")
+
         db.session.commit()
-        flask.flash("product edited")
         return flask.redirect('/')
 
     return flask.render_template('edit.html', product = product)

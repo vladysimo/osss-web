@@ -53,7 +53,8 @@ def api_list():
     product_id_list = []
     for product in Product.query.all():
         product_id_list.append(product.id)
-    return flask.jsonify({'id_list' : product_id_list, })
+    return flask.jsonify({
+        'id_list' : product_id_list, })
 
 #afisam un produs dupa id
 
@@ -62,6 +63,28 @@ def api_product(product_id):
     product = Product.query.get(product_id)
     return flask.jsonify({
         'id' : product.id, 'name' : product.name})
+
+#add an user to db
+
+@app.route('/api/product/create', methods=['POST'])
+def api_product_create():
+    produs = flask.request.get_json()
+    product = Product(name=produs['name'])
+    db.session.add(product)
+    db.session.commit()
+
+    return flask.jsonify({'status': 'ok', 'id' : product.id})
+
+#update user details
+
+@app.route('/api/product/<int:product_id>/update', methods=['POST'])
+def api_produs_update(product_id):
+    produs = flask.request.get_json()
+    product = Product.query.get(product_id)
+    product.name = produs['name']
+    db.session.commit()
+    return flask.jsonify({'status' : 'ok'})
+
 
 
 db.create_all()

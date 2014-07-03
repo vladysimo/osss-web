@@ -1,7 +1,53 @@
-<h1>editare produs</h1>
+{% extends "bootstrap/base.html" %}
 
-<form method="post">
-	<input name="name" value="{{ product.name }}">
-	<button type="submit">edit</button>
-	<button type="submit"name = "delete">delete</button>
-</form>
+
+{% block title %}VirtualShop{% endblock %}
+{% block content %}
+
+	<body>
+
+	<style type="text/css">
+  		body { background: #ACDEF3; }
+	</style>
+
+	<div id="pagewrap" style="width: 998px;;padding:0px 30px;margin:100px auto;background-color: 	#FFFFFF">
+
+		<br>
+		<h1>Editing the product</h1>
+		<br><br>
+
+		<body bgcolor="#0099FF">
+
+		<table class="table table-striped table-bordered table-condensed table-hover" border="1">
+			<thead>
+				<th>Id</th>
+				<th>Nume</th>
+				<th>Pret</th>
+				<th>Description</th>
+		
+			</thead>
+
+			<tr>
+				<td>{{ product.id }}</td>
+				<td>{{ product.name }}</td>
+				<td>{{ product.price }}</td>
+				<td>{{ product.description }}</td>
+			</tr>
+
+		</table>
+		<br><br>
+
+		<form class="form form-horizontal" role="form" method="post">
+			<input name = "name">
+			<input name = "price">
+			<input name = "description">
+			<button  class="btn btn-info" type = "submit">edit</button>
+			<button  class="btn btn-info" type = "submit" name = "delete">delete</button>
+		</form>
+		<br><br>
+
+		</body>
+
+	</div>
+
+{% endblock %}

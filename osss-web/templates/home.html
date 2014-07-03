@@ -1,21 +1,65 @@
-{%for message in get_flashed_messages() %}
-	<p>{{ message }}</p>
-{% endfor %}
+{% extends "bootstrap/base.html" %}
 
-<h1>produs nou</h1>
 
-<form action="/save" method="post">
-	<input name="name">
-	<input name="price">
-	<input name="description">
-	<button type="submit">save</button>
-</form>
+{% block title %}VirtualShop{% endblock %}
+{% block content %}
 
-{%for product in product_list %}
-	<p>
-	{{ product.name }} {{ product.price }} {{ product.description }}
-		<a href="/edit/{{ product.id }}">edit</a>
-	</p>
-{% endfor %}
+	<body>
+
+	<style type="text/css">
+  		body { background: #ACDEF3; }
+	</style>
+
+	<div id="pagewrap" style="width: 998px;;padding:0px 30px;margin:100px auto;background-color: 	#FFFFFF">
+
+		{%for message in get_flashed_messages() %}
+			<p>{{ message }}</p>
+		{% endfor %}
+
+		<br>
+		<h1>Products in store</h1>
+		<br><br>
+
+		<body bgcolor="#0099FF">
+
+		<table class="table table-striped table-bordered table-condensed table-hover" border="1">
+			<thead>
+				<th>Id</th>
+				<th>Nume</th>
+				<th>Pret</th>
+				<th>Edit</th>
+		
+			</thead>
+
+			{%for product in product_list %}
+				<tr>
+					<td>{{ product.id }}</td>
+					<td>{{ product.name }}</td>
+					<td>{{ product.price }}</td>
+					<td>{{ product.description }}</td>
+					<td><a href="/edit/{{ product.id }}">edit</a></td>
+				</tr>
+			{% endfor %}
+
+		</table>
+
+		<br><br>
+		<h4>Add a new product:<br><small>Please enter data</small></h4>
+		<br>
+
+		<form class="form form-horizontal" role="form" action="/save", method="post">
+			<input name = "name">
+			<input name = "price">
+			<input name = "description">
+			<button  class="btn btn-info" type = "submit">save</button>
+		</form>
+		<br><br>
+
+		</body>
+
+	</div>
+
+{% endblock %}
+
 
 

@@ -25,9 +25,9 @@
 		<table class="table table-striped table-bordered table-condensed table-hover" border="1">
 			<thead>
 				<th>Id</th>
-				<th>Nume</th>
-				<th>Pret</th>
-				<th>Edit</th>
+				<th>Name</th>
+				<th>Price</th>
+				<th>Description</th>
 		
 			</thead>
 
@@ -37,8 +37,9 @@
 					<td>{{ product.name }}</td>
 					<td>{{ product.price }}</td>
 					<td>{{ product.description }}</td>
-					<td><a href="/edit/{{ product.id }}">edit</a></td>
+					<td><a href="/edit/{{ product.id }}" class="btn btn-info" role="button">edit</a></td>
 				</tr>
+			
 			{% endfor %}
 
 		</table>
@@ -48,9 +49,9 @@
 		<br>
 
 		<form class="form form-horizontal" role="form" action="/save", method="post">
-			<input name = "name">
-			<input name = "price">
-			<input name = "description">
+			<input name = "name" placeholder="Enter name">
+			<input name = "price" placeholder="Enter price">
+			<input name = "description" placeholder="Enter a short description">
 			<button  class="btn btn-info" type = "submit">save</button>
 		</form>
 		<br><br>

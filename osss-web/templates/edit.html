@@ -18,29 +18,12 @@
 
 		<body bgcolor="#0099FF">
 
-		<table class="table table-striped table-bordered table-condensed table-hover" border="1">
-			<thead>
-				<th>Id</th>
-				<th>Nume</th>
-				<th>Pret</th>
-				<th>Description</th>
-		
-			</thead>
-
-			<tr>
-				<td>{{ product.id }}</td>
-				<td>{{ product.name }}</td>
-				<td>{{ product.price }}</td>
-				<td>{{ product.description }}</td>
-			</tr>
-
-		</table>
 		<br><br>
 
 		<form class="form form-horizontal" role="form" method="post">
-			<input name = "name">
-			<input name = "price">
-			<input name = "description">
+			<input name = "name" value="{{ product.name }}">
+			<input name = "price" value="{{ product.price }}">
+			<input name = "description" value="{{ product.description }}">
 			<button  class="btn btn-info" type = "submit">edit</button>
 			<button  class="btn btn-info" type = "submit" name = "delete">delete</button>
 		</form>

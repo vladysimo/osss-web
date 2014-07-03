@@ -29,8 +29,10 @@ def home():
 def save():
     product = Product(name=flask.request.form['name'], price=flask.request.form['price'],
             description = flask.request.form['description'])
+
     db.session.add(product)
     db.session.commit()
+
     flask.flash("product saved")
     return flask.redirect('/')
 

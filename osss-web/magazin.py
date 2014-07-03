@@ -33,7 +33,6 @@ def save():
     db.session.add(product)
     db.session.commit()
 
-    flask.flash("product saved")
     return flask.redirect('/')
 
 #Editing a product will require POST and GET

@@ -13,6 +13,8 @@ db = SQLAlchemy(app)
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
+    price = db.Column(db.Float)
+    description = db.Column(db.String)
 
 #Home
 
@@ -24,7 +26,8 @@ def home():
 
 @app.route('/save', methods=['POST'])
 def save():
-    product = Product(name=flask.request.form['name'])
+    product = Product(name=flask.request.form['name'], price=flask.request.form['price'],
+            description = flask.request.form['description'])
     db.session.add(product)
     db.session.commit()
     flask.flash("product saved")
@@ -43,6 +46,9 @@ def edit(product_id):
             db.session.delete(product)
         else:
             product.name=flask.request.form['name']
+            product.price=flask.request.form['price']
+            product.description=flask.request.form['description']
+
             flask.flash("product edited")
 
         db.session.commit()
@@ -52,13 +58,22 @@ def edit(product_id):
 
 #json
 
-@app.route('/api/list')
+@app.route('/api/list', methods=['POST','GET'])
 def api_list():
+    print ("in api/list")
     product_id_list = []
+    product_name_list = []
+    product_price_list = []
+    product_description = []
     for product in Product.query.all():
         product_id_list.append(product.id)
+        product_name_list.append(product.name)
+        product_price_list.append(product.price)
+        product_description.append(product.description)
+
     return flask.jsonify({
-        'id_list' : product_id_list, })
+        'id_list' : product_id_list , 'name' : product_name_list , 'price' : product_price_list
+        , 'description' : product_description })
 
 #afisam un produs dupa id
 
@@ -73,7 +88,7 @@ def api_product(product_id):
 @app.route('/api/product/create', methods=['POST'])
 def api_product_create():
     produs = flask.request.get_json()
-    product = Product(name=produs['name'])
+    product = Product(name=produs['name'],price=produs['price'])
     db.session.add(product)
     db.session.commit()
 
@@ -86,6 +101,7 @@ def api_produs_update(product_id):
     produs = flask.request.get_json()
     product = Product.query.get(product_id)
     product.name = produs['name']
+    product.price = produs['price']
     db.session.commit()
     return flask.jsonify({'status' : 'ok'})
 

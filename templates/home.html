@@ -1,21 +1,27 @@
+<!DOCTYPE html>
+
+<html>
+
 {%for message in get_flashed_messages() %}
 	<p>{{ message }}</p>
 {% endfor %}
+<body style="background-color:#C4D9F5;">
 
-<h1>produs nou</h1>
+<h1 style="text-align:center;">| Product Database | </h1>
 
-<form action="/save" method="post">
-	<input name="name">
-	<input name="price">
-	<input name="description">
-	<button type="submit">save</button>
+<form action="/save" method="POST">
+Name:	<input name="Name:">
+Price:	<input name="Price">
+Description:	<input name="Description">
+	<button type="Submit">save</button>
 </form>
 
 {%for product in product_list %}
-	<p>
-	{{ product.name }} {{ product.price }} {{ product.description }}
+<p style="text-align:center;font-family:verdana;font-size:20px">
+      *	{{ product.name }}----------------- {{ product.price }}------------------- {{ product.description }}
 		<a href="/edit/{{ product.id }}">edit</a>
 	</p>
 {% endfor %}
 
-
+</body>
+</html>

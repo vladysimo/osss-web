@@ -13,6 +13,7 @@ db = SQLAlchemy(app)
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
+    price = db.Column(db.Float)
 
 #Home
 
@@ -24,7 +25,7 @@ def home():
 
 @app.route('/save', methods=['POST'])
 def save():
-    product = Product(name=flask.request.form['name'])
+    product = Product(name=flask.request.form['name'],price=flask.request.form['price'])
     db.session.add(product)
     db.session.commit()
     flask.flash("product saved")
@@ -43,6 +44,8 @@ def edit(product_id):
             db.session.delete(product)
         else:
             product.name=flask.request.form['name']
+            product.price=flask.request.form['price']
+
             flask.flash("product edited")
 
         db.session.commit()
@@ -73,7 +76,7 @@ def api_product(product_id):
 @app.route('/api/product/create', methods=['POST'])
 def api_product_create():
     produs = flask.request.get_json()
-    product = Product(name=produs['name'])
+    product = Product(name=produs['name'],price=produs['price'])
     db.session.add(product)
     db.session.commit()
 
@@ -86,6 +89,7 @@ def api_produs_update(product_id):
     produs = flask.request.get_json()
     product = Product.query.get(product_id)
     product.name = produs['name']
+    product.price = produs['price']
     db.session.commit()
     return flask.jsonify({'status' : 'ok'})
 

@@ -6,13 +6,16 @@
 
 <form action="/save" method="post">
 	<input name="name">
+	<input price="price">
 	<button type="submit">save</button>
 </form>
 
 {%for product in product_list %}
 	<p>
-		{{ product.name }}
+	{{ product.name }}
 		<a href="/edit/{{ product.id }}">edit</a>
+	{{ product.price }}
+		<a href="/edit/{{ product.price }}">edit</a>
 	</p>
 {% endfor %}
 
